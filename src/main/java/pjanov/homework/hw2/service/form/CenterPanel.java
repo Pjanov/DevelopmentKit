@@ -4,15 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CenterPanel extends JPanel {
-    private JTextArea messageHistory;
-    private JScrollPane scrollPane;
+    private JTextArea messageHistory = new JTextArea();
 
     public CenterPanel() {
-        messageHistory = new JTextArea();
         messageHistory.setEditable(false);
-        scrollPane = new JScrollPane(messageHistory);
+
         setLayout(new BorderLayout());
 
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.add(messageHistory);
+
         add(scrollPane);
+    }
+
+    public JTextArea getMessageHistory() {
+        return messageHistory;
+    }
+
+    public void setMessageHistory(JTextArea messageHistory) {
+        this.messageHistory = messageHistory;
     }
 }

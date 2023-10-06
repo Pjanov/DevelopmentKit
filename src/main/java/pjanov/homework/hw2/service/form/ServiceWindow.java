@@ -3,15 +3,19 @@ package pjanov.homework.hw2.service.form;
 import pjanov.homework.hw2.client.form.MyForm;
 
 public class ServiceWindow {
-    private MyForm myForm;
-    private MainPanel mainPanel;
+    private final MyForm myForm = new MyForm("Serves");
+    private final MainPanel mainPanel = new MainPanel();
 
     public ServiceWindow() {
-        myForm = new MyForm("Servis");
-        mainPanel = new MainPanel();
-
         myForm.add(mainPanel);
-
         myForm.setVisible(true);
+    }
+
+    public MyForm getMyForm() {
+        return myForm;
+    }
+
+    public MainPanel getMainPanel() {
+        return mainPanel;
     }
 }

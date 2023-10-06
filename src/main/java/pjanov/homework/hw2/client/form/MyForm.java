@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MyForm extends JFrame {
-    private int WIDTH = 400;
-    private int HEIGHT = 400;
+    private final int WIDTH = 400;
+    private final int HEIGHT = 400;
 
     public MyForm(String title) throws HeadlessException {
         super(title);
@@ -14,5 +14,13 @@ public class MyForm extends JFrame {
         setLocationRelativeTo(null);
 
         setVisible(false);
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
     }
 }

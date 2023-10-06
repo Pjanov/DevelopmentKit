@@ -4,16 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private SouthPanel southPanel;
-    private CenterPanel centerPanel;
+    private final SouthPanel southPanel = new SouthPanel();
+    private final CenterPanel centerPanel = new CenterPanel();
 
     public MainPanel() {
-        southPanel = new SouthPanel();
-        centerPanel = new CenterPanel();
-
         setLayout(new BorderLayout());
-
         add(southPanel, BorderLayout.SOUTH);
         add(centerPanel);
+    }
+
+    public SouthPanel getSouthPanel() {
+        return southPanel;
+    }
+
+    public CenterPanel getCenterPanel() {
+        return centerPanel;
     }
 }

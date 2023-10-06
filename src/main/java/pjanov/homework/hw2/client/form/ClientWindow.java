@@ -2,15 +2,15 @@ package pjanov.homework.hw2.client.form;
 
 
 public class ClientWindow {
-    private MainPanel mainPanel;
-    private MyForm myForm;
+    private MainPanel mainPanel = new MainPanel();
+    private final MyForm myForm = new MyForm("Client");
 
     public ClientWindow() {
-        mainPanel = new MainPanel();
-        myForm = new MyForm("Client");
-
         myForm.add(mainPanel);
-
         myForm.setVisible(true);
+    }
+
+    public MyForm getMyForm() {
+        return myForm;
     }
 }
