@@ -1,6 +1,7 @@
-package pjanov.homework.hw2.server.form;
+package pjanov.homework.hw2.server.window;
 
 import pjanov.homework.hw2.client.form.MyForm;
+import pjanov.homework.hw2.server.form.MainPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

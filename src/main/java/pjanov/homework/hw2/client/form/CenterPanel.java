@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CenterPanel extends JPanel {
-    private JTextArea messageHistory = new JTextArea();
+    private JTextArea messageHistory = new JTextArea("История");
 
     public CenterPanel() {
         setLayout(new BorderLayout());
@@ -15,5 +15,9 @@ public class CenterPanel extends JPanel {
 
     public void setMessageHistory(JTextArea messageHistory) {
         this.messageHistory = messageHistory;
+    }
+
+    public JTextArea getMessageHistory() {
+        return messageHistory;
     }
 }

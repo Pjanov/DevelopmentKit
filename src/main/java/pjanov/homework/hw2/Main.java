@@ -2,7 +2,7 @@ package pjanov.homework.hw2;
 
 
 import pjanov.homework.hw2.client.form.ClientWindow;
-import pjanov.homework.hw2.server.form.ServerWindow;
+import pjanov.homework.hw2.server.window.ServerWindow;
 
 public class Main {
     public static void main(String[] args) {
