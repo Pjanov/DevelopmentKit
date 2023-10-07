@@ -23,6 +23,7 @@ public class ClientGUI extends JFrame implements ActionListener {
     private final JTextField username = new JTextField("Введите своё имя");
     private final JPasswordField password = new JPasswordField("123456789");
     private final JButton buttonLogin = new JButton("Ok");
+    private final String chatHistoryFile = "chat_history.txt"; // Имя файла истории чата
 
     public ClientGUI(String title) throws HeadlessException {
         super(title);
@@ -52,79 +53,59 @@ public class ClientGUI extends JFrame implements ActionListener {
         add(panelSouth, BorderLayout.SOUTH);
         add(panelNorth, BorderLayout.NORTH);
 
-        setVisible(false);
+        restoreChatHistory(); // Восстановление истории чата при запуске клиента
+
+        setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonLogin) {
-            chatHistoryArea.setText(username.getText() + " подсоединился к серверу ..." + "\n");
-        } else if (e.getSource() == buttonSend) {
-            sendMessage();
+        if (e.getSource() == buttonSend || e.getSource() == messageField) {
+            String message = messageField.getText();
+            addToChatHistory(message); // Добавление сообщения в историю чата
+
+            // Отправка сообщения на сервер
+            sendMessageToServer(message);
+
+            messageField.setText(""); // Очистка поля ввода сообщения
+        } else if (e.getSource() == buttonLogin) {
+            // Логика для подключения к серверу
+            // ...
         }
     }
 
-    /**
-     * Отправить сообщение
-     */
-    private void sendMessage() {
-        String message = username.getText() + "\n" + messageField.getText();
+    private void addToChatHistory(String message) {
         chatHistoryArea.append(message + "\n");
-        saveChatHistoryToFile(message + "\n");
-        messageField.setText("");
+        saveChatHistory(); // Сохранение истории чата в файл
     }
 
-    /**
-     * Сохранить историю в файл
-     *
-     * @param message сообщение
-     */
-    private void saveChatHistoryToFile(String message) {
-        try {
-            FileWriter writer = new FileWriter("chat_history.txt", true);
-            writer.write(message);
-            writer.close();
+    private void saveChatHistory() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(chatHistoryFile))) {
+            writer.write(chatHistoryArea.getText());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Загрузить историю из файла
-     */
-    private void loadChatHistoryFromFile() {
-        try {
-            File file = new File("chat_history.txt");
-            if (file.exists()) {
-                FileReader reader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(reader);
+    private void restoreChatHistory() {
+        if (Files.exists(Paths.get(chatHistoryFile))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(chatHistoryFile))) {
                 String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    chatHistoryArea.append(line + "\n");
+                StringBuilder chatHistory = new StringBuilder();
+                while ((line = reader.readLine()) != null) {
+                    chatHistory.append(line).append("\n");
                 }
-                bufferedReader.close();
-                reader.close();
+                chatHistoryArea.setText(chatHistory.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    /**
-     * Получить текст из файла
-     *
-     * @param filePath путь к файлу
-     * @return текст
-     */
-    public String getTextFromFile(String filePath) {
-        String text = "";
-        try {
-            text = new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return text;
+    private void sendMessageToServer(String message) {
+        // Логика отправки сообщения на сервер
+        // ...
     }
-
-
 }
+
+

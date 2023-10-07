@@ -1,10 +1,12 @@
 package pjanov.homework.hw2.server;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ServerGUI extends JFrame implements ActionListener {
     private final int WIDTH = 400;
@@ -38,14 +40,33 @@ public class ServerGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonStartService && !status) {
             serverInformation("Сервер Включён ...", Color.GREEN, true);
+            startService();
         } else if (e.getSource() == buttonStopService && status) {
             serverInformation("Сервер Выключен", Color.RED, false);
+            stopService();
         }
+    }
+
+    private void startService() {
+        // Здесь можно добавить логику для запуска сервера
+    }
+
+    private void stopService() {
+        // Здесь можно добавить логику для остановки сервера
     }
 
     public void serverInformation(String text, Color color, boolean b) {
         messageHistory.setForeground(color);
         messageHistory.setText(text);
         status = b;
+    }
+
+    private void writeChatHistoryToFile(String message) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("chat_history.txt", true))) {
+            writer.write(message);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
