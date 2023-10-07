@@ -1,4 +1,4 @@
-package pjanov.homework.hw2.service.form;
+package pjanov.homework.hw2.server.form;
 
 import javax.swing.*;
 import java.awt.*;
