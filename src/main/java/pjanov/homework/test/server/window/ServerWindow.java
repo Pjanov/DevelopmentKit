@@ -1,7 +1,7 @@
-package pjanov.homework.hw2.server.window;
+package pjanov.homework.test.server.window;
 
-import pjanov.homework.hw2.client.form.MyForm;
-import pjanov.homework.hw2.server.form.MainPanel;
+import pjanov.homework.test.client.form.MyForm;
+import pjanov.homework.test.server.form.MainPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

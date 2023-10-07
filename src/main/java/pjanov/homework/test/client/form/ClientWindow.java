@@ -1,4 +1,4 @@
-package pjanov.homework.hw2.client.form;
+package pjanov.homework.test.client.form;
 
 
 import javax.swing.*;

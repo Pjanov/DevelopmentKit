@@ -1,4 +1,4 @@
-package pjanov.homework.hw3.client;
+package pjanov.homework.hw2.client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +28,7 @@ public class ClientGUI extends JFrame implements ActionListener {
         super(title);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocation(83, 164);
+        setLocation(83, 100);
 
         buttonLogin.addActionListener(this);
         buttonSend.addActionListener(this);
@@ -52,7 +52,7 @@ public class ClientGUI extends JFrame implements ActionListener {
         add(panelSouth, BorderLayout.SOUTH);
         add(panelNorth, BorderLayout.NORTH);
 
-        setVisible(true);
+        setVisible(false);
     }
 
     @Override
@@ -125,4 +125,6 @@ public class ClientGUI extends JFrame implements ActionListener {
         }
         return text;
     }
+
+
 }

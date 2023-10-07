@@ -1,27 +1,23 @@
-package pjanov.homework.hw2.server.form;
+package pjanov.homework.test.client.form;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CenterPanel extends JPanel {
-    private JTextArea messageHistory = new JTextArea("Необходимо включить сервер");
+    private JTextArea messageHistory = new JTextArea("История");
 
     public CenterPanel() {
-        messageHistory.setEditable(false);
-
         setLayout(new BorderLayout());
-
         JScrollPane scrollPane = new JScrollPane(messageHistory);
-
 
         add(scrollPane);
     }
 
-    public JTextArea getMessageHistory() {
-        return messageHistory;
-    }
-
     public void setMessageHistory(JTextArea messageHistory) {
         this.messageHistory = messageHistory;
+    }
+
+    public JTextArea getMessageHistory() {
+        return messageHistory;
     }
 }

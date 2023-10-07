@@ -1,13 +1,12 @@
 package pjanov.homework.hw2;
 
-
-import pjanov.homework.hw2.client.form.ClientWindow;
-import pjanov.homework.hw2.server.window.ServerWindow;
+import pjanov.homework.hw2.client.ClientGUI;
+import pjanov.homework.hw2.server.ServerGUI;
 
 public class Main {
     public static void main(String[] args) {
-        new ServerWindow();
-        new ClientWindow().getMyForm().setLocation(70, 250);
-        new ClientWindow().getMyForm().setLocation(900, 250);
+        new ServerGUI("Server");
+        new ClientGUI("Client");
+        new ClientGUI("Client").setLocation(883, 100);
     }
 }

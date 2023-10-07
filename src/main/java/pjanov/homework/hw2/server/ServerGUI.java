@@ -1,4 +1,5 @@
-package pjanov.homework.hw3.server;
+package pjanov.homework.hw2.server;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class ServerGUI extends JFrame implements ActionListener {
         super(title);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocation(483, 164);
+        setLocation(483, 100);
 
         buttonStartService.addActionListener(this);
         buttonStopService.addActionListener(this);
@@ -36,17 +37,15 @@ public class ServerGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonStartService && !status) {
-            setServerStatus("Сервер включён ...");
-            status = true;
-            System.out.println("Сервер включён ...");
+            serverInformation("Сервер Включён ...", Color.GREEN, true);
         } else if (e.getSource() == buttonStopService && status) {
-            setServerStatus("Сервер Выключен");
-            status = false;
-            System.out.println("Сервер Выключен");
+            serverInformation("Сервер Выключен", Color.RED, false);
         }
     }
 
-    public void setServerStatus(String text) {
+    public void serverInformation(String text, Color color, boolean b) {
+        messageHistory.setForeground(color);
         messageHistory.setText(text);
+        status = b;
     }
 }
