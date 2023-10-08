@@ -41,6 +41,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         return messageHistory;
     }
 
+    @Override
     public boolean isStatus() {
         return status;
     }
@@ -55,6 +56,14 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         setStatus(b);
         clientGUI.getChatHistoryArea().append(msg + "\n");
         clientGUI2.getChatHistoryArea().append(msg + "\n");
+    }
+
+    public ClientGUI getClientGUI() {
+        return clientGUI;
+    }
+
+    public ClientGUI getClientGUI2() {
+        return clientGUI2;
     }
 
     @Override

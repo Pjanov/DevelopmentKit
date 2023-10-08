@@ -27,6 +27,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     private final JPasswordField password = new JPasswordField("123456789");
     private final JButton buttonLogin = new JButton("Ok");
     private final String CHAT_HISTORY_FILE = "chat_history.txt";
+    private boolean status;
 
     public ClientGUI(ServerGUI serverGUI, String title) throws HeadlessException {
         super(title);
@@ -53,10 +54,6 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         }
     }
 
-    public String getMessageFieldData() {
-        return messageField.getText();
-    }
-
     public static String readFromFile(String fileName) {
         StringBuilder sb = new StringBuilder();
 
@@ -77,8 +74,9 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     }
 
     public void saveToFile(String fileName, String text) {
+        String userMessage = getUsername().getText();
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write(text + System.lineSeparator());
+            writer.write( userMessage + "\n" + text + "\n");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -88,29 +86,35 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     }
 
     public void btLogin(String msg) {
-
+        String name = getUsername().getText();
         if (serverGUI.isStatus()) {
-            String name = getUsername().getText();
             if (name.equals("Введите своё имя")) {
+                setStatus(false);
                 chatHistoryArea.append(msg + "\n");
             } else {
+                setStatus(true);
+                setTitle(name);
                 getUsername().setForeground(Color.GREEN);
                 chatHistoryArea.append(name + " вы авторизованы" + "\n");
                 chatHistoryArea.append(readFromFile(CHAT_HISTORY_FILE));
             }
         } else {
             chatHistoryArea.append("Необходимо запустить сервер!" + "\n");
+            setStatus(false);
         }
     }
 
     public void btSend(String msg) {
         String name = getUsername().getText();
-        if (name.equals("Введите своё имя")) {
+        if (!isStatus()) {
             chatHistoryArea.append(msg + "\n");
         } else {
-            saveToFile(CHAT_HISTORY_FILE, getMessageFieldData());
-            chatHistoryArea.append(messageField.getText() + "\n");
-            serverGUI.getMessageHistory().append(messageField.getText() + "\n");
+            String userMessage = messageField.getText();
+            saveToFile(CHAT_HISTORY_FILE, userMessage);
+            serverGUI.getClientGUI().chatHistoryArea.append(name + "\n" + userMessage + "\n");
+            serverGUI.getClientGUI2().chatHistoryArea.append(name + "\n" + userMessage + "\n");
+//            chatHistoryArea.append(name + "\n" + userMessage + "\n");
+            serverGUI.getMessageHistory().append(name + "\n" + userMessage + "\n");
             messageField.setText("");
         }
     }
@@ -152,6 +156,15 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         add(panelCenter);
         add(panelSouth, BorderLayout.SOUTH);
         add(panelNorth, BorderLayout.NORTH);
+    }
+
+    @Override
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
 
