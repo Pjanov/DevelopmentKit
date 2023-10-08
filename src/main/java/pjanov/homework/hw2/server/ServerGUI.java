@@ -14,6 +14,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
     private final JTextArea messageHistory = new JTextArea("Необходимо включить сервер");
     private final JPanel panelSouth = new JPanel(new GridLayout(1, 2));
     private final ClientGUI clientGUI;
+    private final ClientGUI clientGUI2;
     private boolean status = false;
 
     public ServerGUI(String title) throws HeadlessException {
@@ -22,6 +23,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         positionButtons();
         positionTextField();
         clientGUI = new ClientGUI(this, "Клиент");
+        clientGUI2 = new ClientGUI(this, "Клиент");
 
         setVisible(true);
     }
@@ -52,6 +54,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         messageHistory.setText(msg);
         setStatus(b);
         clientGUI.getChatHistoryArea().append(msg + "\n");
+        clientGUI2.getChatHistoryArea().append(msg + "\n");
     }
 
     @Override

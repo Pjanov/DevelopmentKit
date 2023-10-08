@@ -78,7 +78,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
 
     public void saveToFile(String fileName, String text) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write(text + System.lineSeparator());
+            writer.write(getUsername().getText() + "\n" + text + "\n");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -109,8 +109,8 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
             chatHistoryArea.append(msg + "\n");
         } else {
             saveToFile(CHAT_HISTORY_FILE, getMessageFieldData());
-            chatHistoryArea.append(messageField.getText() + "\n");
-            serverGUI.getMessageHistory().append(messageField.getText() + "\n");
+            chatHistoryArea.append(name + "\n" + messageField.getText() + "\n");
+            serverGUI.getMessageHistory().append(name + "\n" + messageField.getText() + "\n");
             messageField.setText("");
         }
     }
