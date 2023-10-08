@@ -1,37 +1,27 @@
 package pjanov.homework.hw2.server;
 
+import pjanov.homework.hw2.client.ClientGUI;
+import pjanov.homework.hw2.interfaceForm.InterfaceForForm;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
-public class ServerGUI extends JFrame implements ActionListener {
-    private final int WIDTH = 400;
-    private final int HEIGHT = 400;
+public class ServerGUI extends JFrame implements ActionListener, InterfaceForForm {
     private final JButton buttonStartService = new JButton("StartService");
     private final JButton buttonStopService = new JButton("StopService");
     private final JTextArea messageHistory = new JTextArea("Необходимо включить сервер");
     private final JPanel panelSouth = new JPanel(new GridLayout(1, 2));
+    private final ClientGUI clientGUI;
     private boolean status = false;
 
     public ServerGUI(String title) throws HeadlessException {
         super(title);
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocation(483, 100);
-
-        buttonStartService.addActionListener(this);
-        buttonStopService.addActionListener(this);
-
-        messageHistory.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(messageHistory);
-        panelSouth.add(buttonStartService);
-        panelSouth.add(buttonStopService);
-        add(panelSouth, BorderLayout.SOUTH);
-        add(scrollPane);
+        windowData();
+        positionButtons();
+        positionTextField();
+        clientGUI = new ClientGUI(this, "Клиент");
 
         setVisible(true);
     }
@@ -39,34 +29,51 @@ public class ServerGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonStartService && !status) {
-            serverInformation("Сервер Включён ...", Color.GREEN, true);
-            startService();
+            messageFromServer("Сервер включен ..." + "\n", Color.GREEN, true);
         } else if (e.getSource() == buttonStopService && status) {
-            serverInformation("Сервер Выключен", Color.RED, false);
-            stopService();
+            messageFromServer("Сервер выключен", Color.RED, false);
         }
     }
 
-    private void startService() {
-        // Здесь можно добавить логику для запуска сервера
+    public JTextArea getMessageHistory() {
+        return messageHistory;
     }
 
-    private void stopService() {
-        // Здесь можно добавить логику для остановки сервера
+    public boolean isStatus() {
+        return status;
     }
 
-    public void serverInformation(String text, Color color, boolean b) {
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    private void messageFromServer(String msg, Color color, boolean b) {
         messageHistory.setForeground(color);
-        messageHistory.setText(text);
-        status = b;
+        messageHistory.setText(msg);
+        setStatus(b);
+        clientGUI.getChatHistoryArea().append(msg + "\n");
     }
 
-    private void writeChatHistoryToFile(String message) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("chat_history.txt", true))) {
-            writer.write(message);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void positionButtons() {
+        buttonStartService.addActionListener(this);
+        buttonStopService.addActionListener(this);
+        panelSouth.add(buttonStartService);
+        panelSouth.add(buttonStopService);
+        add(panelSouth, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void positionTextField() {
+        messageHistory.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(messageHistory);
+        add(scrollPane);
+    }
+
+    @Override
+    public void windowData() {
+        setSize(InterfaceForForm.WIDTH, InterfaceForForm.HEIGHT);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocation(483, 100);
     }
 }
