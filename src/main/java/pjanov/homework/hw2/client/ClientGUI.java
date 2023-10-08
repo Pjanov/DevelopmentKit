@@ -78,7 +78,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
 
     public void saveToFile(String fileName, String text) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write(text + System.lineSeparator());
+            writer.write(username.getText() + "\n" + text + "\n");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -94,8 +94,10 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
             if (name.equals("Введите своё имя")) {
                 chatHistoryArea.append(msg + "\n");
             } else {
+                chatHistoryArea.setText("");
+                setTitle(name);
                 getUsername().setForeground(Color.GREEN);
-                chatHistoryArea.append(name + " вы авторизованы" + "\n");
+                chatHistoryArea.append(name + " вы авторизованы ..." + "\n");
                 chatHistoryArea.append(readFromFile(CHAT_HISTORY_FILE));
             }
         } else {
@@ -109,8 +111,8 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
             chatHistoryArea.append(msg + "\n");
         } else {
             saveToFile(CHAT_HISTORY_FILE, getMessageFieldData());
-            chatHistoryArea.append(messageField.getText() + "\n");
-            serverGUI.getMessageHistory().append(messageField.getText() + "\n");
+            chatHistoryArea.append(name + "\n" + getMessageFieldData() + "\n");
+            serverGUI.getMessageHistory().append(name + "\n" + getMessageFieldData() + "\n");
             messageField.setText("");
         }
     }
