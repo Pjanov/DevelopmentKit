@@ -13,17 +13,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ClientGUI extends JFrame implements ActionListener, InterfaceForForm {
-    private ServerGUI serverGUI;
-    private JPanel panelSouth = new JPanel(new BorderLayout());
-    private JPanel panelCenter = new JPanel(new BorderLayout());
-    private JPanel panelNorth = new JPanel(new BorderLayout());
-    private JPanel panelWithData = new JPanel(new GridLayout(2, 2));
-    private JButton buttonSend = new JButton("Send");
-    private JTextField messageField = new JTextField();
-    private JTextArea chatHistoryArea = new JTextArea();
+    private final ServerGUI serverGUI;
+    private final JPanel panelSouth = new JPanel(new BorderLayout());
+    private final JPanel panelCenter = new JPanel(new BorderLayout());
+    private final JPanel panelNorth = new JPanel(new BorderLayout());
+    private final JPanel panelWithData = new JPanel(new GridLayout(2, 2));
+    private final JButton buttonSend = new JButton("Send");
+    private final JTextField messageField = new JTextField();
+    private final JTextArea chatHistoryArea = new JTextArea();
     private final JTextField serverIpAddresses = new JTextField("127.0.0.1", 10);
     private final JTextField serverConnectionPort = new JTextField("8189");
-    private JTextField username = new JTextField("Введите своё имя");
+    private final JTextField username = new JTextField("Введите своё имя");
     private final JPasswordField password = new JPasswordField("123456789");
     private final JButton buttonLogin = new JButton("Ok");
     private final String CHAT_HISTORY_FILE = "chat_history.txt";
@@ -117,10 +117,6 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
 
     public JTextField getUsername() {
         return username;
-    }
-
-    public void setUsername(JTextField username) {
-        this.username = username;
     }
 
     @Override
