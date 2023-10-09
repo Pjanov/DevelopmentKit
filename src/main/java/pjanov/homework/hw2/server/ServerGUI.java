@@ -65,6 +65,11 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
     public void setClientStatus(boolean b) {
         for (ClientGUI clientGUI : clientGUIList) {
             clientGUI.setStatus(b);
+            if (!b) {
+                clientGUI.getUsername().setForeground(Color.RED);
+            } else {
+                clientGUI.getUsername().setForeground(Color.GREEN);
+            }
         }
     }
 
