@@ -31,12 +31,40 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         this.status = status;
     }
 
+    /**
+     * Сообщение от сервера
+     *
+     * @param msg   сообщение
+     * @param color цвет сообщения
+     * @param b     статус сервера
+     */
     private void messageFromServer(String msg, Color color, boolean b) {
         messageHistory.setForeground(color);
         messageHistory.setText(msg);
         setStatus(b);
+        sendMessageFromServerToClient(msg + "\n");
+        setClientStatus(b);
+    }
+
+    /**
+     * Отправить сообщение от сервера клиенту
+     *
+     * @param msg сообщение
+     */
+    public void sendMessageFromServerToClient(String msg) {
         for (ClientGUI clientGUI : clientGUIList) {
-            clientGUI.addMessage(msg + "\n");
+            clientGUI.addMessage(msg);
+        }
+    }
+
+    /**
+     * Установить статус клиента
+     *
+     * @param b статус клиента
+     */
+    public void setClientStatus(boolean b) {
+        for (ClientGUI clientGUI : clientGUIList) {
+            clientGUI.setStatus(b);
         }
     }
 
@@ -47,9 +75,9 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonStartService && !status) {
-            messageFromServer("Сервер включен ..." + "\n", Color.GREEN, true);
+            messageFromServer("Сервер включен ...\n", Color.GREEN, true);
         } else if (e.getSource() == buttonStopService && status) {
-            messageFromServer("Сервер выключен", Color.RED, false);
+            messageFromServer("Сервер выключен\n", Color.RED, false);
         }
     }
 

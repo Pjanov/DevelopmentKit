@@ -40,6 +40,12 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         setVisible(true);
     }
 
+    /**
+     * Прочитать текст из файла
+     *
+     * @param fileName путь к файлу
+     * @return текст
+     */
     public static String readFromFile(String fileName) {
         StringBuilder sb = new StringBuilder();
 
@@ -59,6 +65,12 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         return sb.toString();
     }
 
+    /**
+     * Сохранить текст в файл
+     *
+     * @param fileName путь к файлу
+     * @param text     текст
+     */
     public void saveToFile(String fileName, String text) {
         String userMessage = getUsername().getText();
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -71,6 +83,11 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         }
     }
 
+    /**
+     * Действие при нажатии на кнопку Login
+     *
+     * @param msg сообщение
+     */
     public void btLogin(String msg) {
         String name = getUsername().getText();
         if (serverGUI.isStatus()) {
@@ -91,6 +108,11 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         }
     }
 
+    /**
+     * Действие при нажатии на кнопку Send
+     *
+     * @param msg сообщение
+     */
     public void btSend(String msg) {
         String name = getUsername().getText();
         if (!isStatus()) {
@@ -98,9 +120,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         } else {
             String userMessage = messageField.getText();
             saveToFile(CHAT_HISTORY_FILE, userMessage);
-            for (int i = 0; i < serverGUI.getClientGUIList().size(); i++) {
-                serverGUI.getClientGUIList().get(i).addMessage(name + "\n" + userMessage + "\n");
-            }
+            serverGUI.sendMessageFromServerToClient(name + "\n" + userMessage + "\n");
             serverGUI.addMessage(name + "\n" + userMessage + "\n");
             messageField.setText("");
         }
