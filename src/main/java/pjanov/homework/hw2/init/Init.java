@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Init {
-    private ServerGUI serverGUI;
-    private List<ClientGUI> clientGUIList;
-    private ClientGUI clientGUI1;
-    private ClientGUI clientGUI2;
+    ServerGUI serverGUI;
+    List<ClientGUI> clientGUIList;
+    ClientGUI clientGUI1;
+    ClientGUI clientGUI2;
 
     public Init() {
         serverGUI = new ServerGUI("serverGUI");
