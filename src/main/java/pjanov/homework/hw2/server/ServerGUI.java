@@ -7,14 +7,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerGUI extends JFrame implements ActionListener, InterfaceForForm {
     private final JButton buttonStartService = new JButton("StartService");
     private final JButton buttonStopService = new JButton("StopService");
     private final JTextArea messageHistory = new JTextArea("Необходимо включить сервер");
     private final JPanel panelSouth = new JPanel(new GridLayout(1, 2));
-    private final ClientGUI clientGUI;
-    private final ClientGUI clientGUI2;
+//    private final ClientGUI clientGUI;
+//    private final ClientGUI clientGUI2;
+    private List<ClientGUI> clientGUIList;
     private boolean status = false;
 
     public ServerGUI(String title) throws HeadlessException {
@@ -22,8 +25,9 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         windowData();
         positionButtons();
         positionTextField();
-        clientGUI = new ClientGUI(this, "Клиент");
-        clientGUI2 = new ClientGUI(this, "Клиент");
+        clientGUIList = new ArrayList<>();
+//        clientGUI = new ClientGUI(this, "Клиент");
+//        clientGUI2 = new ClientGUI(this, "Клиент");
 
         setVisible(true);
     }
@@ -54,16 +58,28 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         messageHistory.setForeground(color);
         messageHistory.setText(msg);
         setStatus(b);
-        clientGUI.getChatHistoryArea().append(msg + "\n");
-        clientGUI2.getChatHistoryArea().append(msg + "\n");
+        for (ClientGUI clientGUI : clientGUIList) {
+            clientGUI.getChatHistoryArea().append(msg + "\n");
+        }
+//        clientGUI.getChatHistoryArea().append(msg + "\n");
+//        clientGUI2.getChatHistoryArea().append(msg + "\n");
     }
 
-    public ClientGUI getClientGUI() {
-        return clientGUI;
+//    public ClientGUI getClientGUI() {
+//        return clientGUI;
+//    }
+//
+//    public ClientGUI getClientGUI2() {
+//        return clientGUI2;
+//    }
+
+
+    public List<ClientGUI> getClientGUIList() {
+        return clientGUIList;
     }
 
-    public ClientGUI getClientGUI2() {
-        return clientGUI2;
+    public void setClientGUIList(List<ClientGUI> clientGUIList) {
+        this.clientGUIList = clientGUIList;
     }
 
     @Override

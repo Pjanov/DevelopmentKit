@@ -97,6 +97,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
                 getUsername().setForeground(Color.GREEN);
                 chatHistoryArea.append(name + " вы авторизованы" + "\n");
                 chatHistoryArea.append(readFromFile(CHAT_HISTORY_FILE));
+                serverGUI.getClientGUIList().add(this);
             }
         } else {
             chatHistoryArea.append("Необходимо запустить сервер!" + "\n");
@@ -111,8 +112,11 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         } else {
             String userMessage = messageField.getText();
             saveToFile(CHAT_HISTORY_FILE, userMessage);
-            serverGUI.getClientGUI().chatHistoryArea.append(name + "\n" + userMessage + "\n");
-            serverGUI.getClientGUI2().chatHistoryArea.append(name + "\n" + userMessage + "\n");
+            for (int i = 0; i < serverGUI.getClientGUIList().size(); i++) {
+                serverGUI.getClientGUIList().get(i).chatHistoryArea.append(name + "\n" + userMessage + "\n");
+            }
+//            serverGUI.getClientGUI().chatHistoryArea.append(name + "\n" + userMessage + "\n");
+//            serverGUI.getClientGUI2().chatHistoryArea.append(name + "\n" + userMessage + "\n");
 //            chatHistoryArea.append(name + "\n" + userMessage + "\n");
             serverGUI.getMessageHistory().append(name + "\n" + userMessage + "\n");
             messageField.setText("");

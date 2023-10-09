@@ -9,24 +9,17 @@ import java.util.List;
 public class Controller {
     private ServerGUI serverGUI;
     private List<ClientGUI> clientGUIList;
+    private ClientGUI clientGUI1;
+    private ClientGUI clientGUI2;
 
-    public Controller(ServerGUI serverGUI, List<ClientGUI> clientGUIList) {
-        this.serverGUI = serverGUI;
-        this.clientGUIList = clientGUIList;
-    }
-
-
-
-    public static void main(String[] args) {
-        ServerGUI serverGUI1 = new ServerGUI("serverGUI");
-        ClientGUI clientGUI1 = new ClientGUI(serverGUI1, "clientGUI1");
-        ClientGUI clientGUI2 = new ClientGUI(serverGUI1, "clientGUI2");
+    public Controller() {
+        serverGUI = new ServerGUI("serverGUI");
+        clientGUI1 = new ClientGUI(serverGUI, "clientGUI1");
+        clientGUI2 = new ClientGUI(serverGUI, "clientGUI2");
         clientGUI2.setLocation(883, 100);
-        List<ClientGUI> clientGUIList1 = new ArrayList<>();
+        clientGUIList = new ArrayList<>();
 
-        clientGUIList1.add(clientGUI1);
-        clientGUIList1.add(clientGUI2);
-
-        new Controller(serverGUI1, clientGUIList1);
+        clientGUIList.add(clientGUI1);
+        clientGUIList.add(clientGUI2);
     }
 }
