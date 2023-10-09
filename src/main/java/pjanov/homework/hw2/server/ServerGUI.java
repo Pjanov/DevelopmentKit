@@ -15,9 +15,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
     private final JButton buttonStopService = new JButton("StopService");
     private final JTextArea messageHistory = new JTextArea("Необходимо включить сервер");
     private final JPanel panelSouth = new JPanel(new GridLayout(1, 2));
-//    private final ClientGUI clientGUI;
-//    private final ClientGUI clientGUI2;
-    private List<ClientGUI> clientGUIList;
+    private final List<ClientGUI> clientGUIList;
     private boolean status = false;
 
     public ServerGUI(String title) throws HeadlessException {
@@ -26,28 +24,7 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         positionButtons();
         positionTextField();
         clientGUIList = new ArrayList<>();
-//        clientGUI = new ClientGUI(this, "Клиент");
-//        clientGUI2 = new ClientGUI(this, "Клиент");
-
         setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonStartService && !status) {
-            messageFromServer("Сервер включен ..." + "\n", Color.GREEN, true);
-        } else if (e.getSource() == buttonStopService && status) {
-            messageFromServer("Сервер выключен", Color.RED, false);
-        }
-    }
-
-    public JTextArea getMessageHistory() {
-        return messageHistory;
-    }
-
-    @Override
-    public boolean isStatus() {
-        return status;
     }
 
     public void setStatus(boolean status) {
@@ -59,27 +36,31 @@ public class ServerGUI extends JFrame implements ActionListener, InterfaceForFor
         messageHistory.setText(msg);
         setStatus(b);
         for (ClientGUI clientGUI : clientGUIList) {
-            clientGUI.getChatHistoryArea().append(msg + "\n");
+            clientGUI.addMessage(msg + "\n");
         }
-//        clientGUI.getChatHistoryArea().append(msg + "\n");
-//        clientGUI2.getChatHistoryArea().append(msg + "\n");
     }
-
-//    public ClientGUI getClientGUI() {
-//        return clientGUI;
-//    }
-//
-//    public ClientGUI getClientGUI2() {
-//        return clientGUI2;
-//    }
-
 
     public List<ClientGUI> getClientGUIList() {
         return clientGUIList;
     }
 
-    public void setClientGUIList(List<ClientGUI> clientGUIList) {
-        this.clientGUIList = clientGUIList;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonStartService && !status) {
+            messageFromServer("Сервер включен ..." + "\n", Color.GREEN, true);
+        } else if (e.getSource() == buttonStopService && status) {
+            messageFromServer("Сервер выключен", Color.RED, false);
+        }
+    }
+
+    @Override
+    public void addMessage(String msg) {
+        messageHistory.append(msg);
+    }
+
+    @Override
+    public boolean isStatus() {
+        return status;
     }
 
     @Override

@@ -8,5 +8,8 @@ public interface InterfaceForForm {
     void positionButtons();
 
     void positionTextField();
+
     boolean isStatus();
+
+    void addMessage(String msg);
 }

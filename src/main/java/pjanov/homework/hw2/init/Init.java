@@ -1,4 +1,4 @@
-package pjanov.homework.hw2.controller;
+package pjanov.homework.hw2.init;
 
 import pjanov.homework.hw2.client.ClientGUI;
 import pjanov.homework.hw2.server.ServerGUI;
@@ -6,13 +6,13 @@ import pjanov.homework.hw2.server.ServerGUI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Controller {
+public class Init {
     private ServerGUI serverGUI;
     private List<ClientGUI> clientGUIList;
     private ClientGUI clientGUI1;
     private ClientGUI clientGUI2;
 
-    public Controller() {
+    public Init() {
         serverGUI = new ServerGUI("serverGUI");
         clientGUI1 = new ClientGUI(serverGUI, "clientGUI1");
         clientGUI2 = new ClientGUI(serverGUI, "clientGUI2");

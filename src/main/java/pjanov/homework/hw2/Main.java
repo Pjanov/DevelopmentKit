@@ -1,9 +1,9 @@
 package pjanov.homework.hw2;
 
-import pjanov.homework.hw2.controller.Controller;
+import pjanov.homework.hw2.init.Init;
 
 public class Main {
     public static void main(String[] args) {
-        new Controller();
+        new Init();
     }
 }

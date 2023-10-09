@@ -40,20 +40,6 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         setVisible(true);
     }
 
-    public JTextArea getChatHistoryArea() {
-        return chatHistoryArea;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonSend) {
-            btSend("С начало авторизуйтесь!!!");
-        } else if (e.getSource() == buttonLogin) {
-            btLogin("Вы не авторизованы!!!");
-            chatHistoryArea.append("");
-        }
-    }
-
     public static String readFromFile(String fileName) {
         StringBuilder sb = new StringBuilder();
 
@@ -76,7 +62,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     public void saveToFile(String fileName, String text) {
         String userMessage = getUsername().getText();
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write( userMessage + "\n" + text + "\n");
+            writer.write(userMessage + "\n" + text + "\n");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -90,17 +76,17 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
         if (serverGUI.isStatus()) {
             if (name.equals("Введите своё имя")) {
                 setStatus(false);
-                chatHistoryArea.append(msg + "\n");
+                addMessage(msg + "\n");
             } else {
                 setStatus(true);
                 setTitle(name);
                 getUsername().setForeground(Color.GREEN);
-                chatHistoryArea.append(name + " вы авторизованы" + "\n");
-                chatHistoryArea.append(readFromFile(CHAT_HISTORY_FILE));
+                addMessage(name + " вы авторизованы" + "\n");
+                addMessage(readFromFile(CHAT_HISTORY_FILE));
                 serverGUI.getClientGUIList().add(this);
             }
         } else {
-            chatHistoryArea.append("Необходимо запустить сервер!" + "\n");
+            addMessage("Необходимо запустить сервер!" + "\n");
             setStatus(false);
         }
     }
@@ -108,23 +94,39 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     public void btSend(String msg) {
         String name = getUsername().getText();
         if (!isStatus()) {
-            chatHistoryArea.append(msg + "\n");
+            addMessage(msg + "\n");
         } else {
             String userMessage = messageField.getText();
             saveToFile(CHAT_HISTORY_FILE, userMessage);
             for (int i = 0; i < serverGUI.getClientGUIList().size(); i++) {
-                serverGUI.getClientGUIList().get(i).chatHistoryArea.append(name + "\n" + userMessage + "\n");
+                serverGUI.getClientGUIList().get(i).addMessage(name + "\n" + userMessage + "\n");
             }
-//            serverGUI.getClientGUI().chatHistoryArea.append(name + "\n" + userMessage + "\n");
-//            serverGUI.getClientGUI2().chatHistoryArea.append(name + "\n" + userMessage + "\n");
-//            chatHistoryArea.append(name + "\n" + userMessage + "\n");
-            serverGUI.getMessageHistory().append(name + "\n" + userMessage + "\n");
+            serverGUI.addMessage(name + "\n" + userMessage + "\n");
             messageField.setText("");
         }
     }
 
     public JTextField getUsername() {
         return username;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonSend) {
+            btSend("С начало авторизуйтесь!!!");
+        } else if (e.getSource() == buttonLogin) {
+            btLogin("Вы не авторизованы!!!");
+            addMessage("");
+        }
+    }
+
+    @Override
+    public void addMessage(String msg) {
+        chatHistoryArea.append(msg);
     }
 
     @Override
@@ -166,10 +168,4 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
     public boolean isStatus() {
         return status;
     }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }
-
-
