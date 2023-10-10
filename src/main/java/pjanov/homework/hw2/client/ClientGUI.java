@@ -46,7 +46,7 @@ public class ClientGUI extends JFrame implements ActionListener, InterfaceForFor
      * @param fileName путь к файлу
      * @return текст
      */
-    public static String readFromFile(String fileName) {
+    public String readFromFile(String fileName) {
         StringBuilder sb = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
